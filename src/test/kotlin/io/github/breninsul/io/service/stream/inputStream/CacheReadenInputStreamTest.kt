@@ -51,7 +51,18 @@ class CacheReadenInputStreamTest {
         val result = pushbackInputStream.readAllBytes()
         assertArrayEquals(data, result)
     }
-
+    @Test
+    fun `test toUnreadPushbackInputStreamReset`() {
+        val data = "Hello World!".toByteArray()
+        val inputStream = ByteArrayInputStream(data)
+        val cacheStream = CacheReadenInputStream(inputStream, closeStream = false, bufferSize = 2)
+        cacheStream.mark(5)
+        repeat(5){cacheStream.read()}
+        cacheStream.reset()
+        val pushbackInputStream = cacheStream.toUnreadPushbackInputStream()
+        val result = pushbackInputStream.readAllBytes()
+        assertArrayEquals(data, result)
+    }
 
     @Test
     fun `test read all bytes`() {
