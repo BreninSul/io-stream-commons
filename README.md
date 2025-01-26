@@ -1,0 +1,1 @@
+This is lib provides common Input/Output stream implementations for JVM
