@@ -23,6 +23,7 @@ package io.github.breninsul.io.service.stream.inputStream
 import io.netty.buffer.Unpooled
 import io.netty.buffer.ByteBuf
 import java.io.*
+import java.util.*
 
 /**
  * A subclass of `InputStream` that provides a buffered reading mechanism
@@ -185,7 +186,21 @@ open class CacheReadenInputStream(
     }
 
     override fun internalTransferTo(out: OutputStream): Long {
-        return delegate.transferTo(out)
+        Objects.requireNonNull(out, "out")
+        var transferred: Long = 0
+        val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+        var read: Int
+        while ((read(buffer, 0, DEFAULT_BUFFER_SIZE).also { read = it }) >= 0) {
+            out.write(buffer, 0, read)
+            if (transferred < Long.MAX_VALUE) {
+                transferred = try {
+                    Math.addExact(transferred, read.toLong())
+                } catch (ignore: ArithmeticException) {
+                    Long.MAX_VALUE
+                }
+            }
+        }
+        return transferred
     }
 
 }

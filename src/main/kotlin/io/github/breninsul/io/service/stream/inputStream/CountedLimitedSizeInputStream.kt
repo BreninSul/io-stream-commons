@@ -2,6 +2,7 @@ package io.github.breninsul.io.service.stream.inputStream
 
 import java.io.InputStream
 import java.io.OutputStream
+import java.util.*
 
 open class CountedLimitedSizeInputStream(
     inputStream: InputStream,
@@ -47,7 +48,21 @@ open class CountedLimitedSizeInputStream(
     }
 
     override fun internalTransferTo(out: OutputStream): Long {
-        return delegate.transferTo(out)
+        Objects.requireNonNull(out, "out")
+        var transferred: Long = 0
+        val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+        var read: Int
+        while ((read(buffer, 0, DEFAULT_BUFFER_SIZE).also { read = it }) >= 0) {
+            out.write(buffer, 0, read)
+            if (transferred < Long.MAX_VALUE) {
+                transferred = try {
+                    Math.addExact(transferred, read.toLong())
+                } catch (ignore: ArithmeticException) {
+                    Long.MAX_VALUE
+                }
+            }
+        }
+        return transferred
     }
 
 
