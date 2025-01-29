@@ -190,7 +190,7 @@ open class CacheReadenInputStream(
         var transferred: Long = 0
         val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
         var read: Int
-        while ((read(buffer, 0, DEFAULT_BUFFER_SIZE).also { read = it }) >= 0) {
+        while ((internalRead(buffer, 0, DEFAULT_BUFFER_SIZE).also { read = it }) >= 0) {
             out.write(buffer, 0, read)
             if (transferred < Long.MAX_VALUE) {
                 transferred = try {
