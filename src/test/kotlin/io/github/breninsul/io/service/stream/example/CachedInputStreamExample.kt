@@ -21,6 +21,7 @@
 package io.github.breninsul.io.service.stream.example
 
 import io.github.breninsul.io.service.stream.inputStream.CacheReadenInputStream
+import io.github.breninsul.io.service.stream.inputStream.toCacheReadenInputStream
 import org.junit.jupiter.api.Test
 import java.io.ByteArrayInputStream
 
@@ -31,10 +32,13 @@ class CachedInputStreamExample {
         val originalInputStream = ByteArrayInputStream("test".toByteArray())
         //create cached stream
         val cacheStream = CacheReadenInputStream(originalInputStream)
+        val cacheStreamSecond = originalInputStream.toCacheReadenInputStream()
+
         //Read two bytes
         val readen2Bytes = cacheStream.readNBytes(2)
         //Get new InputStream in "original" condition, as 2 bytes haven't been readen
         val pushbackInputStream = cacheStream.toUnreadPushbackInputStream()
+
         val result = pushbackInputStream.readAllBytes()
         println("Original data: ${String(originalData)},Pushback data: ${String(result)},Readen 2 bytes: ${String(readen2Bytes)}")
 

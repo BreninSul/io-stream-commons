@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "io.github.breninsul"
-version = "1.0.2"
+version = "1.0.3"
 
 
 val javaVersion = JavaVersion.VERSION_17

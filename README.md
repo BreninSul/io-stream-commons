@@ -6,7 +6,7 @@ This is lib provides common Input/Output stream implementations for JVM
 ````kotlin
 dependencies {
 //Other dependencies
-    implementation("io.github.breninsul:io-stream-commons:${version}")
+    implementation("io.github.breninsul:io-stream-commons:1.0.3")
 //Other dependencies
 }
 ````
@@ -32,7 +32,10 @@ class CachedInputStreamExample {
         val originalInputStream = ByteArrayInputStream("test".toByteArray())
         //create cached stream
         val cacheStream = CacheReadenInputStream(originalInputStream)
-        //Read two bytes
+        //Or use extension
+        val cacheStreamSecond = originalInputStream.toCacheReadenInputStream()
+
+      //Read two bytes
         val readen2Bytes = cacheStream.readNBytes(2)
         //Get new InputStream in "original" condition, as 2 bytes haven't been readen
         val pushbackInputStream = cacheStream.toUnreadPushbackInputStream()

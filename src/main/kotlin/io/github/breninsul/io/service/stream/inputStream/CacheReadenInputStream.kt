@@ -45,7 +45,7 @@ import java.util.*
  */
 open class CacheReadenInputStream(
     inputStream: InputStream,
-    protected open val closeStream: Boolean = false,
+    open val closeStream: Boolean = false,
     protected open val bufferSize: Int = if (inputStream is ByteArrayInputStream) inputStream.available() else  UShort.MAX_VALUE.toInt()
 ) : InputStreamWrapper(inputStream) {
     protected open val buffer: ByteBuf = Unpooled.buffer(bufferSize)
@@ -203,4 +203,23 @@ open class CacheReadenInputStream(
         return transferred
     }
 
+}
+
+/**
+ * Converts the current `InputStream` to a `CacheReadenInputStream`.
+ * If the current stream is already an instance of `CacheReadenInputStream` with the same
+ * `closeStream` configuration, it is returned directly. Otherwise, a new instance is created.
+ *
+ * @param closeStream Indicates if the underlying input stream should be closed when the
+ *    `CacheReadenInputStream` is closed. Defaults to `true`.
+ * @param bufferSize The buffer size to use for the `CacheReadenInputStream`.
+ *    Defaults to the maximum value of `UShort`.
+ * @return A `CacheReadenInputStream` wrapping the current `InputStream`.
+ */
+fun InputStream.toCacheReadenInputStream(closeStream:Boolean=true, bufferSize: Int = UShort.MAX_VALUE.toInt()):CacheReadenInputStream{
+    if (this is CacheReadenInputStream && this.closeStream==closeStream){
+        return this
+    } else {
+        return CacheReadenInputStream(this,closeStream,bufferSize)
+    }
 }
