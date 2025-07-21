@@ -39,7 +39,7 @@ tasks.compileKotlin {
 }
 
 dependencies {
-    api("io.netty:netty-buffer:4.2.117.Final")
+    api("io.netty:netty-buffer:4.2.3.Final")
     api("org.jetbrains.kotlin:kotlin-reflect")
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
 }
