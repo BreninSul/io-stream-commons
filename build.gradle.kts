@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "io.github.breninsul"
-version = "1.0.3"
+version = "1.0.4"
 
 
 val javaVersion = JavaVersion.VERSION_17
@@ -39,7 +39,7 @@ tasks.compileKotlin {
 }
 
 dependencies {
-    api("io.netty:netty-buffer:4.1.117.Final")
+    api("io.netty:netty-buffer:4.2.117.Final")
     api("org.jetbrains.kotlin:kotlin-reflect")
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
 }

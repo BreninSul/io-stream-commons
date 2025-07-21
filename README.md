@@ -6,7 +6,7 @@ This is lib provides common Input/Output stream implementations for JVM
 ````kotlin
 dependencies {
 //Other dependencies
-    implementation("io.github.breninsul:io-stream-commons:1.0.3")
+    implementation("io.github.breninsul:io-stream-commons:1.0.4")
 //Other dependencies
 }
 ````
