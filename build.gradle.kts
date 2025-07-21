@@ -82,6 +82,7 @@ centralPortal {
         url.set("https://github.com/BreninSul/$repositoryName")
         description.set(
             """
+This is lib provides common Input/Output stream implementations for JVM
             """.trimIndent(),
         )
         licenses {
